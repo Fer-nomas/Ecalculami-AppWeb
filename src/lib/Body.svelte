@@ -10,8 +10,7 @@
   export let year = null;
   let tasks = [];
   let datosAnteriores = [];
-  let modifiedTasks = [];
-  let consumibleTasks = [];
+  let newTasks = [];
 
   function mesAnterior(mes) {
     const meses = [
@@ -50,55 +49,67 @@
   function cargarDatos() {
     let tempObj;
 
-    for (let i = 0; i < datosAnteriores.length; i++) {
-      for (let j = 0; j < tasks.length; j++) {
+    for (let i = 0; i < tasks.length; i++) {
+      for (let j = 0; j < datosAnteriores.length; j++) {
         if (
-          tasks[j].medi.includes(datosAnteriores[i].mediPast) &&
-          tasks[j].month.includes(datosAnteriores[i].mesPast)
+          tasks[i].medi.includes == datosAnteriores[j].mediPast &&
+          tasks[i].month
+            .toLowerCase()
+            .includes(datosAnteriores[j].mesPast.toLowerCase())
         ) {
           tempObj = {
-            id: tasks[j].id,
-            medi: tasks[j].medi,
-            month: tasks[j].month,
-            cons: tasks[j].cons,
-            name: tasks[j].name,
-            paid: tasks[j].paid,
-            bill: tasks[j].cons - datosAnteriores[i].consPast,
+            id: tasks[i].id,
+            medi: Number(tasks[i].medi),
+            month: tasks[i].month,
+            cons: tasks[i].cons,
+            name: tasks[i].name,
+            paid: tasks[i].paid,
+            bill: tasks[i].cons - datosAnteriores[j].consPast,
           };
 
-          modifiedTasks.push(tempObj);
+          newTasks.push(tempObj);
         }
       }
     }
 
     for (let i = 0; i < tasks.length; i++) {
-      if (tasks[i].month == "enero") {
+      if (tasks[i].month.toLowerCase() == "enero") {
         tempObj = {
           id: tasks[i].id,
-          medi: tasks[i].medi,
+          medi: Number(tasks[i].medi),
           month: tasks[i].month,
           cons: tasks[i].cons,
           name: tasks[i].name,
           paid: tasks[i].paid,
           bill: "No hay mes anterior",
         };
-        modifiedTasks.unshift(tempObj);
+        newTasks.unshift(tempObj);
+      }
+    }
+    ordenarDatos(newTasks);
+  }
+
+  function ordenarDatos() {
+    for (let i = 0; i < newTasks.length; i++) {
+      for (let j = 0; j < i; j++) {
+        if (newTasks[i].medi < newTasks[j].medi) {
+          let temp;
+          temp = newTasks[i];
+          newTasks[i] = newTasks[j];
+          newTasks[j] = temp;
+        }
       }
     }
   }
 
   function crearApi() {
     datosAnteriores = [];
-    modifiedTasks = [];
-    consumibleTasks = [];
+    newTasks = [];
+    newTasks = [];
 
     registrarDatosAnt();
 
     cargarDatos();
-
-    console.log(modifiedTasks);
-
-    consumibleTasks = modifiedTasks.map((e) => e);
   }
 
   onSnapshot(collection(db, "2023"), (querySnapshot) => {
@@ -181,7 +192,7 @@
       </div>
     </div>
     <div class="flex flex-wrap items-center justify-center">
-      {#each consumibleTasks as task}
+      {#each newTasks as task}
         {#if task.name
           .toLowerCase()
           .trim()
