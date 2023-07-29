@@ -2,32 +2,32 @@
   // @ts-nocheck
 
   import { db } from "../firebase";
-  import { collection, onSnapshot } from "firebase/firestore";
+  import { collection, deleteDoc, onSnapshot, doc } from "firebase/firestore";
   import Filter from "./Filter.svelte";
 
   export let value = "";
   export let month = "";
   export let year = null;
-  let tasks = [];
   let datosAnteriores = [];
+  let tasks = [];
   let newTasks = [];
+  const meses = [
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+  ];
 
   function mesAnterior(mes) {
-    const meses = [
-      "enero",
-      "febrero",
-      "marzo",
-      "abril",
-      "mayo",
-      "junio",
-      "julio",
-      "agosto",
-      "septiembre",
-      "octubre",
-      "noviembre",
-      "diciembre",
-    ];
-    const indiceMes = meses.indexOf(mes);
+    const indiceMes = meses.indexOf(mes.toLowerCase().trim());
     if (meses[indiceMes + 1] === undefined) {
       return "No hay datos anteriores";
     } else {
@@ -52,10 +52,10 @@
     for (let i = 0; i < tasks.length; i++) {
       for (let j = 0; j < datosAnteriores.length; j++) {
         if (
-          tasks[i].medi.includes == datosAnteriores[j].mediPast &&
-          tasks[i].month
-            .toLowerCase()
-            .includes(datosAnteriores[j].mesPast.toLowerCase())
+          tasks[i].medi == datosAnteriores[j].mediPast &&
+          tasks[i].month.toLowerCase().trim() ==
+            datosAnteriores[j].mesPast.toLowerCase().trim() &&
+          tasks[i].month.toLowerCase().trim() !== "enero"
         ) {
           tempObj = {
             id: tasks[i].id,
@@ -66,7 +66,6 @@
             paid: tasks[i].paid,
             bill: tasks[i].cons - datosAnteriores[j].consPast,
           };
-
           newTasks.push(tempObj);
         }
       }
@@ -86,13 +85,21 @@
         newTasks.unshift(tempObj);
       }
     }
-    ordenarDatos(newTasks);
   }
 
   function ordenarDatos() {
     for (let i = 0; i < newTasks.length; i++) {
       for (let j = 0; j < i; j++) {
         if (newTasks[i].medi < newTasks[j].medi) {
+          let temp;
+          temp = newTasks[i];
+          newTasks[i] = newTasks[j];
+          newTasks[j] = temp;
+        }
+        if (
+          meses.indexOf(newTasks[i].month.toLowerCase().trim()) <
+          meses.indexOf(newTasks[j].month.toLowerCase().trim())
+        ) {
           let temp;
           temp = newTasks[i];
           newTasks[i] = newTasks[j];
@@ -110,12 +117,24 @@
     registrarDatosAnt();
 
     cargarDatos();
+
+    ordenarDatos(newTasks);
   }
 
   onSnapshot(collection(db, "2023"), (querySnapshot) => {
     tasks = querySnapshot.docs.map((doc) => {
       return { ...doc.data(), id: doc.id };
     });
+
+    // async function pilin() {
+    //   for (let i = 0; i < tasks.length; i++) {
+    //     if (tasks[i].consumo === "") {
+    //       console.log(tasks[i].id);
+    //       await deleteDoc(doc(db, "2023", tasks[i].id));
+    //     }
+    //   }
+    // }
+    // pilin();
 
     crearApi();
   });
