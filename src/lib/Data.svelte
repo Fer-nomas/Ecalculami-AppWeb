@@ -3,6 +3,7 @@
   import { db } from "../firebase";
   import { updateDoc, doc } from "firebase/firestore";
   import Swal from "sweetalert2";
+  import { url } from "@roxi/routify";
   export let task;
 
   let diferenciaConsumo = [];
@@ -74,9 +75,11 @@
   <div>Uso: {task.bill}</div>
   <div>Pago: {calculoDeFactura(task.bill)}</div>
   <div class="flex flex-col items-start gap-2 p-8" style="border: none">
-    <button
-      class="bg-white text-black rounded-2xl w-[100%] p-2 border-2 border-transparent hover:bg-transparent hover:border-white hover:text-white"
-      >Imprimir</button
+    <!-- svelte-ignore a11y-invalid-attribute -->
+    <a
+      href={$url("./printsolo/:info", { info: JSON.stringify(task) })}
+      class="flex justify-center bg-white text-black rounded-2xl w-[100%] p-2 border-2 border-transparent hover:bg-transparent hover:border-white hover:text-white"
+      >Imprimir</a
     >
     {#if task.paid === true}
       <button

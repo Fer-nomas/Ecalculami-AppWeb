@@ -1,12 +1,9 @@
 <script>
-  import Header from "./lib/Header.svelte";
-  import Body from "./lib/Body.svelte";
+  import { Router } from "@roxi/routify";
+  import { routes } from "../.routify/routes";
 </script>
 
-<div class="h-screen w-screen">
-  <Header />
-  <Body />
-</div>
+<Router {routes} />
 
 <style>
   :global(body) {

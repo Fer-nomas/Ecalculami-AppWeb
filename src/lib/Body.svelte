@@ -1,143 +1,19 @@
 <script>
   // @ts-nocheck
-
-  import { db } from "../firebase";
-  import { collection, deleteDoc, onSnapshot, doc } from "firebase/firestore";
+  import { startFetch, newTasks } from "../functions";
   import Filter from "./Filter.svelte";
+  import { url } from "@roxi/routify";
 
   export let value = "";
   export let month = "";
   export let year = null;
-  let datosAnteriores = [];
-  let tasks = [];
-  let newTasks = [];
-  const meses = [
-    "enero",
-    "febrero",
-    "marzo",
-    "abril",
-    "mayo",
-    "junio",
-    "julio",
-    "agosto",
-    "septiembre",
-    "octubre",
-    "noviembre",
-    "diciembre",
-  ];
+  export let printTasks = [];
 
-  function mesAnterior(mes) {
-    const indiceMes = meses.indexOf(mes.toLowerCase().trim());
-    if (meses[indiceMes + 1] === undefined) {
-      return "No hay datos anteriores";
-    } else {
-      return meses[indiceMes + 1];
-    }
-  }
+  startFetch();
 
-  function registrarDatosAnt() {
-    tasks.forEach((e) => {
-      datosAnteriores.push({
-        mesPast: mesAnterior(e.month),
-        mediPast: e.medi,
-        consPast: e.cons,
-        idPast: e.id,
-      });
-    });
-  }
-
-  function cargarDatos() {
-    let tempObj;
-
-    for (let i = 0; i < tasks.length; i++) {
-      for (let j = 0; j < datosAnteriores.length; j++) {
-        if (
-          tasks[i].medi == datosAnteriores[j].mediPast &&
-          tasks[i].month.toLowerCase().trim() ==
-            datosAnteriores[j].mesPast.toLowerCase().trim() &&
-          tasks[i].month.toLowerCase().trim() !== "enero"
-        ) {
-          tempObj = {
-            id: tasks[i].id,
-            medi: Number(tasks[i].medi),
-            month: tasks[i].month,
-            cons: tasks[i].cons,
-            name: tasks[i].name,
-            paid: tasks[i].paid,
-            bill: tasks[i].cons - datosAnteriores[j].consPast,
-          };
-          newTasks.push(tempObj);
-        }
-      }
-    }
-
-    for (let i = 0; i < tasks.length; i++) {
-      if (tasks[i].month.toLowerCase() == "enero") {
-        tempObj = {
-          id: tasks[i].id,
-          medi: Number(tasks[i].medi),
-          month: tasks[i].month,
-          cons: tasks[i].cons,
-          name: tasks[i].name,
-          paid: tasks[i].paid,
-          bill: "No hay mes anterior",
-        };
-        newTasks.unshift(tempObj);
-      }
-    }
-  }
-
-  function ordenarDatos() {
-    for (let i = 0; i < newTasks.length; i++) {
-      for (let j = 0; j < i; j++) {
-        if (newTasks[i].medi < newTasks[j].medi) {
-          let temp;
-          temp = newTasks[i];
-          newTasks[i] = newTasks[j];
-          newTasks[j] = temp;
-        }
-        if (
-          meses.indexOf(newTasks[i].month.toLowerCase().trim()) <
-          meses.indexOf(newTasks[j].month.toLowerCase().trim())
-        ) {
-          let temp;
-          temp = newTasks[i];
-          newTasks[i] = newTasks[j];
-          newTasks[j] = temp;
-        }
-      }
-    }
-  }
-
-  function crearApi() {
-    datosAnteriores = [];
-    newTasks = [];
-    newTasks = [];
-
-    registrarDatosAnt();
-
-    cargarDatos();
-
-    ordenarDatos(newTasks);
-  }
-
-  onSnapshot(collection(db, "2023"), (querySnapshot) => {
-    tasks = querySnapshot.docs.map((doc) => {
-      return { ...doc.data(), id: doc.id };
-    });
-
-    // async function pilin() {
-    //   for (let i = 0; i < tasks.length; i++) {
-    //     if (tasks[i].consumo === "") {
-    //       console.log(tasks[i].id);
-    //       await deleteDoc(doc(db, "2023", tasks[i].id));
-    //     }
-    //   }
-    // }
-    // pilin();
-
-    crearApi();
-  });
+  setTimeout(() => {
+    month = "ninguno";
+  }, 400);
 </script>
 
 <div class="flex flex-col">
@@ -194,12 +70,13 @@
       </form>
     </div>
 
-    <div
+    <a
+      href={$url("./printall")}
       class=" absolute right-10 flex bg-transparent m-2 p-4 h-8 rounded-3xl justify-center items-center border-2 border-transparent bg-white text-black text-[10px] hover:bg-transparent hover:border-slate-900 hover:text-white"
       style="cursor: pointer;"
     >
       Imprimir Todo
-    </div>
+    </a>
   </div>
 
   <div class="flex flex-col h-screen w-[98%] mr-5 ml-5 rounded-lg">
@@ -212,12 +89,7 @@
     </div>
     <div class="flex flex-wrap items-center justify-center">
       {#each newTasks as task}
-        {#if task.name
-          .toLowerCase()
-          .trim()
-          .includes(value.toLowerCase().trim())}
-          <Filter {task} {year} {month} />
-        {/if}
+        <Filter {task} {year} {month} {printTasks} {value} />
       {/each}
     </div>
   </div>
