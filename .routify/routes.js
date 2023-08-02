@@ -1,11 +1,11 @@
 
 /**
  * @roxi/routify 2.18.12
- * File generated Mon Jul 31 2023 20:14:02 GMT-0400 (hora estándar de Paraguay)
+ * File generated Tue Aug 01 2023 20:49:48 GMT-0400 (hora estándar de Paraguay)
  */
 
 export const __version = "2.18.12"
-export const __timestamp = "2023-08-01T00:14:02.016Z"
+export const __timestamp = "2023-08-02T00:49:48.772Z"
 
 //buildRoutes
 import { buildClientTree } from "@roxi/routify/runtime/buildRoutes"
@@ -59,6 +59,31 @@ export const _tree = {
       "badExt": false,
       "absolutePath": "C:/Users/ferda/Desktop/ecalculamiDesktop/src/pages/printall",
       "children": [
+        {
+          "isFile": true,
+          "isDir": false,
+          "file": "[info].svelte",
+          "filepath": "/printall/[info].svelte",
+          "name": "[info]",
+          "ext": "svelte",
+          "badExt": false,
+          "absolutePath": "C:/Users/ferda/Desktop/ecalculamiDesktop/src/pages/printall/[info].svelte",
+          "importPath": "../src/pages/printall/[info].svelte",
+          "isLayout": false,
+          "isReset": false,
+          "isIndex": false,
+          "isFallback": false,
+          "isPage": true,
+          "ownMeta": {},
+          "meta": {
+            "recursive": true,
+            "preload": false,
+            "prerender": true
+          },
+          "path": "/printall/:info",
+          "id": "_printall__info",
+          "component": () => import('../src/pages/printall/[info].svelte').then(m => m.default)
+        },
         {
           "isFile": true,
           "isDir": false,

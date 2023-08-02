@@ -1,5 +1,4 @@
 <script>
-  // @ts-nocheck
   import { startFetch, newTasks } from "../functions";
   import Filter from "./Filter.svelte";
   import { url } from "@roxi/routify";
@@ -13,7 +12,33 @@
 
   setTimeout(() => {
     month = "ninguno";
-  }, 400);
+    test();
+  }, 700);
+
+  function test(e) {
+    printTasks = [];
+    for (let i = 0; i < newTasks.length; i++) {
+      if (e === undefined) printTasks.push(newTasks[i]);
+      else if (
+        newTasks[i].name.toLowerCase().trim().includes(e.target.value) ||
+        value.trim().toLowerCase() === ""
+      ) {
+        if (newTasks[i].medi == year && year !== null) {
+          if (newTasks[i].month.toLowerCase().trim() === month) {
+            printTasks.push(newTasks[i]);
+          } else if (month == "" || month == "ninguno") {
+            printTasks.push(newTasks[i]);
+          }
+        } else if (year == null) {
+          if (newTasks[i].month.toLowerCase().trim() === month) {
+            printTasks.push(newTasks[i]);
+          } else if (month == "" || month == "ninguno") {
+            printTasks.push(newTasks[i]);
+          }
+        }
+      }
+    }
+  }
 </script>
 
 <div class="flex flex-col">
@@ -25,10 +50,12 @@
       on:submit|preventDefault
     >
       <input
+        on:input={test}
         bind:value
         name="buscar"
         placeholder="Buscar"
         class="outline-none font-normal w-60"
+        id="nombre-buscador"
       />
       <button class="flex justify-center"
         ><span class="material-symbols-outlined"> search </span>
@@ -45,6 +72,7 @@
           class=" pl-1 outline-none border-0 border-transparent"
           contenteditable="true"
           bind:innerHTML={month}
+          on:input={test}
         >
           <option disabled selected>Elija un mes</option>
           <option value="ninguno">Ninguno</option>
@@ -66,12 +94,17 @@
         class="flex bg-white m-2 p-2 h-10 rounded-3xl justify-center items-center"
       >
         <span>N° Medidor:</span>
-        <input class="outline-none pl-1" type="number" bind:value={year} />
+        <input
+          class="outline-none pl-1"
+          type="number"
+          bind:value={year}
+          on:input={test}
+        />
       </form>
     </div>
 
     <a
-      href={$url("./printall")}
+      href={$url("./printall/:info", { info: JSON.stringify(printTasks) })}
       class=" absolute right-10 flex bg-transparent m-2 p-4 h-8 rounded-3xl justify-center items-center border-2 border-transparent bg-white text-black text-[10px] hover:bg-transparent hover:border-slate-900 hover:text-white"
       style="cursor: pointer;"
     >
@@ -82,7 +115,7 @@
   <div class="flex flex-col h-screen w-[98%] mr-5 ml-5 rounded-lg">
     <div>
       <div
-        class="text-black p-2 m-4 text-4xl border-b-2 border-slate-600 items-center justify-center"
+        class=" text-black p-2 m-4 text-4xl border-b-2 border-slate-600 items-center justify-center"
       >
         Consulte las Facturas...
       </div>
