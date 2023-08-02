@@ -1,10 +1,16 @@
 <script>
+  import BillPrinted from "../../lib/BillPrinted.svelte";
+
   export let info;
   const decodedData = decodeURIComponent(info);
   const task = JSON.parse(decodedData);
+  function name(params) {
+    window.print();
+  }
 </script>
 
-<h1>siiii</h1>
-{#each task as item}
-  {item.name}
-{/each}
+<div on:click={name} class="flex justify-center items-center flex-col">
+  {#each task as item}
+    <BillPrinted {item} />
+  {/each}
+</div>

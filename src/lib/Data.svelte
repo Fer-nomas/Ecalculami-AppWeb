@@ -4,6 +4,7 @@
   import { updateDoc, doc } from "firebase/firestore";
   import Swal from "sweetalert2";
   import { url } from "@roxi/routify";
+  import { calculoDeFactura } from "../functions";
   export let task;
 
   let diferenciaConsumo = [];
@@ -42,22 +43,6 @@
         confirmButtonColor: "rgb(59 130 246)",
         showCloseButton: true,
       });
-    }
-  }
-
-  function calculoDeFactura(bill) {
-    if (bill <= 15) {
-      guaranies = "25.000 Gs";
-      return guaranies;
-    } else if (bill == "No hay mes anterior") {
-      guaranies = "No hay";
-      return guaranies;
-    } else if (bill > 15) {
-      let resta = bill - 15;
-      let extra = resta * 2;
-      let total = extra + 15;
-      guaranies = `${total}.000 Gs`;
-      return guaranies;
     }
   }
 </script>

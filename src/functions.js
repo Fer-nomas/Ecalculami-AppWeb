@@ -4,7 +4,7 @@ import { collection, deleteDoc, onSnapshot, doc } from "firebase/firestore";
 let datosAnteriores = [];
 let tasks = [];
 export let newTasks = [];
-const meses = [
+export const MESES = [
   "enero",
   "febrero",
   "marzo",
@@ -32,11 +32,11 @@ const meses = [
  * @param {string} mes
  */
 function mesAnterior(mes) {
-  const indiceMes = meses.indexOf(mes.toLowerCase().trim());
-  if (meses[indiceMes + 1] === undefined) {
+  const indiceMes = MESES.indexOf(mes.toLowerCase().trim());
+  if (MESES[indiceMes + 1] === undefined) {
     return "No hay datos anteriores";
   } else {
-    return meses[indiceMes + 1];
+    return MESES[indiceMes + 1];
   }
 }
 
@@ -62,6 +62,11 @@ function cargarDatos() {
           datosAnteriores[j].mesPast.toLowerCase().trim() &&
         tasks[i].month.toLowerCase().trim() !== "enero"
       ) {
+        let excess;
+        if (tasks[i].cons - datosAnteriores[j].consPast > 15) {
+          excess = tasks[i].cons - datosAnteriores[j].consPast - 15;
+        } else excess = 0;
+
         tempObj = {
           id: tasks[i].id,
           medi: Number(tasks[i].medi),
@@ -70,8 +75,11 @@ function cargarDatos() {
           name: tasks[i].name,
           paid: tasks[i].paid,
           bill: tasks[i].cons - datosAnteriores[j].consPast,
+          prevCons: datosAnteriores[j].consPast,
+          excess: excess,
         };
         newTasks.push(tempObj);
+        console.log(tempObj);
       }
     }
   }
@@ -85,7 +93,8 @@ function cargarDatos() {
         cons: tasks[i].cons,
         name: tasks[i].name,
         paid: tasks[i].paid,
-        bill: "No hay mes anterior",
+        bill: "No hay",
+        excess: "--",
       };
       newTasks.unshift(tempObj);
     }
@@ -102,8 +111,8 @@ function ordenarDatos() {
         newTasks[j] = temp;
       }
       if (
-        meses.indexOf(newTasks[i].month.toLowerCase().trim()) <
-        meses.indexOf(newTasks[j].month.toLowerCase().trim())
+        MESES.indexOf(newTasks[i].month.toLowerCase().trim()) <
+        MESES.indexOf(newTasks[j].month.toLowerCase().trim())
       ) {
         let temp;
         temp = newTasks[i];
@@ -138,4 +147,20 @@ export async function startFetch() {
   });
 }
 
+let guaranies;
+export function calculoDeFactura(bill) {
+  if (bill <= 15) {
+    guaranies = "25.000 Gs";
+    return guaranies;
+  } else if (bill == "No hay") {
+    guaranies = "25.000 Gs";
+    return guaranies;
+  } else if (bill > 15) {
+    let resta = bill - 15;
+    let extra = resta * 2;
+    let total = extra + 25;
+    guaranies = `${total}.000 Gs`;
+    return guaranies;
+  }
+}
 export default startFetch();
