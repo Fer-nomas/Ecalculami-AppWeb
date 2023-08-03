@@ -10,12 +10,12 @@
 
   startFetch();
 
-  setTimeout(() => {
+  setInterval(() => {
     month = "ninguno";
-    test();
-  }, 700);
+    verificacionFiltro();
+  }, 100);
 
-  function test(e) {
+  function verificacionFiltro(e) {
     printTasks = [];
     for (let i = 0; i < newTasks.length; i++) {
       if (e === undefined) printTasks.push(newTasks[i]);
@@ -50,7 +50,7 @@
       on:submit|preventDefault
     >
       <input
-        on:input={test}
+        on:input={verificacionFiltro}
         bind:value
         name="buscar"
         placeholder="Buscar"
@@ -72,7 +72,7 @@
           class=" pl-1 outline-none border-0 border-transparent"
           contenteditable="true"
           bind:innerHTML={month}
-          on:input={test}
+          on:input={verificacionFiltro}
         >
           <option disabled selected>Elija un mes</option>
           <option value="ninguno">Ninguno</option>
@@ -98,7 +98,7 @@
           class="outline-none pl-1"
           type="number"
           bind:value={year}
-          on:input={test}
+          on:input={verificacionFiltro}
         />
       </form>
     </div>

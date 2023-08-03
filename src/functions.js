@@ -79,7 +79,6 @@ function cargarDatos() {
           excess: excess,
         };
         newTasks.push(tempObj);
-        console.log(tempObj);
       }
     }
   }
@@ -162,5 +161,7 @@ export function calculoDeFactura(bill) {
     guaranies = `${total}.000 Gs`;
     return guaranies;
   }
+  console.log(eric);
 }
 export default startFetch();
+let eric = "profe suicida";
