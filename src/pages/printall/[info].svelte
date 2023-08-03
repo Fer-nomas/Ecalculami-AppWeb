@@ -4,12 +4,12 @@
   export let info;
   const decodedData = decodeURIComponent(info);
   const task = JSON.parse(decodedData);
-  function name(params) {
+  setTimeout(() => {
     window.print();
-  }
+  }, 200);
 </script>
 
-<div on:click={name} class="flex justify-center items-center flex-col">
+<div class="flex justify-center items-center flex-col">
   {#each task as item}
     <BillPrinted {item} />
   {/each}
