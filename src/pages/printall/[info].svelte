@@ -1,5 +1,6 @@
 <script>
   import BillPrinted from "../../lib/BillPrinted.svelte";
+  import { url } from "@roxi/routify";
 
   export let info;
   const decodedData = decodeURIComponent(info);
@@ -9,8 +10,8 @@
   }, 200);
 </script>
 
-<div class="flex justify-center items-center flex-col">
+<a href={$url("/")} class="flex justify-center items-center flex-col">
   {#each task as item}
     <BillPrinted {item} />
   {/each}
-</div>
+</a>
