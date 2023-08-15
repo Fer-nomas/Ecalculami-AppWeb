@@ -10,10 +10,10 @@
 
   startFetch();
 
-  setInterval(() => {
+  setTimeout(() => {
     month = "ninguno";
     verificacionFiltro();
-  }, 100);
+  }, 1700);
 
   function verificacionFiltro(e) {
     printTasks = [];
@@ -38,6 +38,7 @@
         }
       }
     }
+    console.log(printTasks);
   }
 </script>
 
