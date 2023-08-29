@@ -21,6 +21,11 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
+    "@tanstack/svelte-table": "^8.9.6",
+    "@types/file-saver": "^2.0.5",
+    "excel4node": "^1.8.2",
+    "exceljs": "^4.3.0",
+    "file-saver": "^2.0.5",
     "firebase": "^9.22.2",
     "sweetalert2": "^11.7.12"
   }

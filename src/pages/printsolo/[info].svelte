@@ -10,6 +10,6 @@
   }, 200);
 </script>
 
-<a href={$url("/")} class="flex items-center justify-center flex-col">
+<a href={$url("/")} class="h-screen flex items-center flex-col">
   <BillPrinted {item} />
 </a>

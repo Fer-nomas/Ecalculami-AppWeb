@@ -1,11 +1,11 @@
 
 /**
  * @roxi/routify 2.18.12
- * File generated Fri Aug 04 2023 23:31:52 GMT-0400 (hora estándar de Paraguay)
+ * File generated Tue Aug 29 2023 17:39:48 GMT-0400 (hora estándar de Paraguay)
  */
 
 export const __version = "2.18.12"
-export const __timestamp = "2023-08-05T03:31:52.920Z"
+export const __timestamp = "2023-08-29T21:39:48.157Z"
 
 //buildRoutes
 import { buildClientTree } from "@roxi/routify/runtime/buildRoutes"
@@ -22,7 +22,7 @@ export const _tree = {
   "filepath": "/_layout.svelte",
   "root": true,
   "ownMeta": {},
-  "absolutePath": "C:/Users/ferda/Desktop/ecalculamiDesktop/src/pages/_layout.svelte",
+  "absolutePath": "C:/Users/ferda/Desktop/Ecalculami-AppWeb/src/pages/_layout.svelte",
   "children": [
     {
       "isFile": true,
@@ -32,7 +32,7 @@ export const _tree = {
       "name": "index",
       "ext": "svelte",
       "badExt": false,
-      "absolutePath": "C:/Users/ferda/Desktop/ecalculamiDesktop/src/pages/index.svelte",
+      "absolutePath": "C:/Users/ferda/Desktop/Ecalculami-AppWeb/src/pages/index.svelte",
       "importPath": "../src/pages/index.svelte",
       "isLayout": false,
       "isReset": false,
@@ -57,7 +57,7 @@ export const _tree = {
       "name": "printall",
       "ext": "",
       "badExt": false,
-      "absolutePath": "C:/Users/ferda/Desktop/ecalculamiDesktop/src/pages/printall",
+      "absolutePath": "C:/Users/ferda/Desktop/Ecalculami-AppWeb/src/pages/printall",
       "children": [
         {
           "isFile": true,
@@ -67,7 +67,7 @@ export const _tree = {
           "name": "[info]",
           "ext": "svelte",
           "badExt": false,
-          "absolutePath": "C:/Users/ferda/Desktop/ecalculamiDesktop/src/pages/printall/[info].svelte",
+          "absolutePath": "C:/Users/ferda/Desktop/Ecalculami-AppWeb/src/pages/printall/[info].svelte",
           "importPath": "../src/pages/printall/[info].svelte",
           "isLayout": false,
           "isReset": false,
@@ -92,7 +92,7 @@ export const _tree = {
           "name": "index",
           "ext": "svelte",
           "badExt": false,
-          "absolutePath": "C:/Users/ferda/Desktop/ecalculamiDesktop/src/pages/printall/index.svelte",
+          "absolutePath": "C:/Users/ferda/Desktop/Ecalculami-AppWeb/src/pages/printall/index.svelte",
           "importPath": "../src/pages/printall/index.svelte",
           "isLayout": false,
           "isReset": false,
@@ -131,7 +131,7 @@ export const _tree = {
       "name": "printsolo",
       "ext": "",
       "badExt": false,
-      "absolutePath": "C:/Users/ferda/Desktop/ecalculamiDesktop/src/pages/printsolo",
+      "absolutePath": "C:/Users/ferda/Desktop/Ecalculami-AppWeb/src/pages/printsolo",
       "children": [
         {
           "isFile": true,
@@ -141,7 +141,7 @@ export const _tree = {
           "name": "[info]",
           "ext": "svelte",
           "badExt": false,
-          "absolutePath": "C:/Users/ferda/Desktop/ecalculamiDesktop/src/pages/printsolo/[info].svelte",
+          "absolutePath": "C:/Users/ferda/Desktop/Ecalculami-AppWeb/src/pages/printsolo/[info].svelte",
           "importPath": "../src/pages/printsolo/[info].svelte",
           "isLayout": false,
           "isReset": false,
@@ -166,7 +166,7 @@ export const _tree = {
           "name": "index",
           "ext": "svelte",
           "badExt": false,
-          "absolutePath": "C:/Users/ferda/Desktop/ecalculamiDesktop/src/pages/printsolo/index.svelte",
+          "absolutePath": "C:/Users/ferda/Desktop/Ecalculami-AppWeb/src/pages/printsolo/index.svelte",
           "importPath": "../src/pages/printsolo/index.svelte",
           "isLayout": false,
           "isReset": false,
