@@ -20,13 +20,13 @@ export const MESES = [
 ];
 // async function pilin() {
 //   for (let i = 0; i < tasks.length; i++) {
-//     if (tasks[i].name === "asd") {
+//     console.log(tasks);
+//     if (tasks[i].medi == 58) {
 //       console.log(tasks[i].id);
 //       await deleteDoc(doc(db, "2023", tasks[i].id));
 //     }
 //   }
 // }
-// pilin();
 
 /**
  * @param {string} mes
