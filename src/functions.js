@@ -47,6 +47,7 @@ function registrarDatosAnt() {
       mediPast: e.medi,
       consPast: e.cons,
       idPast: e.id,
+      paidPast: e.paid,
     });
   });
 }
@@ -74,7 +75,11 @@ function cargarDatos() {
           cons: tasks[i].cons,
           name: tasks[i].name,
           paid: tasks[i].paid,
+          paidPast: datosAnteriores[i].paidPast,
           bill: tasks[i].cons - datosAnteriores[j].consPast,
+          debit: datosAnteriores[i].paidPast
+            ? calculoDeFactura(tasks[i].cons - datosAnteriores[j].consPast)
+            : "0",
           prevCons: datosAnteriores[j].consPast,
           excess: excess,
         };
@@ -92,6 +97,8 @@ function cargarDatos() {
         cons: tasks[i].cons,
         name: tasks[i].name,
         paid: tasks[i].paid,
+        paidPast: datosAnteriores[i].paidPast,
+        debit: "No hay",
         bill: "No hay",
         excess: "--",
       };

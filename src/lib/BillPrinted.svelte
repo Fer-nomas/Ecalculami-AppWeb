@@ -73,7 +73,7 @@
       <div class="flex flex-col justify-around items-end">
         <p>25.000 Gs.</p>
         <p>{item.excess * 2 ? item.excess * 2 + ".000" : "--"} Gs.</p>
-        <p>-- Gs.</p>
+        <p>{item.debit ? item.debit : "0"}</p>
         <p>{calculoDeFactura(item.bill)}.</p>
       </div>
     </div>

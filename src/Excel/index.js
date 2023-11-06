@@ -63,6 +63,9 @@ export default async function exportExcel() {
       ws.getCell("D7").value = "Exceso";
       ws.getCell("D8").value = newTasks[i].excess;
 
+      ws.getCell("E7").value = "Exceso en Gs";
+      ws.getCell("E8").value = newTasks[i].excess;
+
       const columnA = ws.getColumn("A");
       columnA.width = 20;
       columnA.alignment = {
@@ -89,6 +92,13 @@ export default async function exportExcel() {
         horizontal: "center",
       };
 
+      const columnE = ws.getColumn("E");
+      columnE.width = 15;
+      columnE.alignment = {
+        vertical: "middle",
+        horizontal: "center",
+      };
+
       const title = ws.getCell("A1");
       title.value = "LECTURA DE MEDIDOR";
 
@@ -97,7 +107,6 @@ export default async function exportExcel() {
     } else {
       let contlex = 8;
       let contcons = 9;
-      let contexc = 9;
 
       for (let x = 0; x < 100; x++) {
         let celdaAntLex = ws.getCell(`B${contlex - 1}`);
@@ -128,16 +137,30 @@ export default async function exportExcel() {
       }
 
       for (let x = 0; x < 100; x++) {
-        let celdaAntExc = ws.getCell(`D${contexc - 1}`);
-        let celdaExc = ws.getCell(`D${contexc}`);
+        let celdaAntExc = ws.getCell(`D${contlex - 1}`);
+        let celdaExc = ws.getCell(`D${contlex}`);
 
         if (celdaExc.value) {
-          contexc++;
+          contlex++;
         } else if (
           celdaAntExc.value != newTasks[i].excess &&
           celdaExc.value == null
         ) {
-          ws.getCell(`D${contexc}`).value = newTasks[i].excess;
+          ws.getCell(`D${contlex - 1}`).value = newTasks[i].excess;
+        }
+      }
+
+      for (let x = 0; x < 100; x++) {
+        let celdaAntExc = ws.getCell(`E${contlex - 1}`);
+        let celdaExc = ws.getCell(`E${contlex}`);
+
+        if (celdaExc.value) {
+          contlex++;
+        } else if (
+          celdaAntExc.value != newTasks[i].excess &&
+          celdaExc.value == null
+        ) {
+          ws.getCell(`E${contlex - 1}`).value = newTasks[i].excess * 2000;
         }
       }
     }
